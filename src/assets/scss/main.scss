@@ -95,6 +95,12 @@ a {
 
 .main-page-wrapped {
 	height: 100vh;
+
+	.error {
+		color: red;
+		font-size: 12px;
+		margin-top: 5px;
+	}
 }
 
 .bg-img {
@@ -125,9 +131,11 @@ a {
 		margin-bottom: 0;
 		font-family: "Outfit";
 		font-weight: 900;
-		img{
+
+		img {
 			max-width: 200px;
 		}
+
 		@media (max-width:768px) {
 			margin-bottom: 10px;
 		}

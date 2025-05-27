@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { TypeAnimation } from 'react-type-animation';
 import Select from 'react-select';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+const apiUrl = 'https://myapi.myarcfunding.com/api/v1/'; // Replace with your actual API base URL
 
 const customStyles = {
     control: (base) => ({
@@ -12,8 +15,8 @@ const customStyles = {
         color: '#fff',
         outline: 'none',
         boxShadow: 'none',
-        fontSize:'14px',
-        height:'45px'
+        fontSize: '14px',
+        height: '45px'
     }),
     menu: (base) => ({
         ...base,
@@ -21,7 +24,7 @@ const customStyles = {
         color: '#fff',
         borderRadius: '10px',
         zIndex: 10,
-        fontSize:'14px'
+        fontSize: '14px'
     }),
     option: (base, state) => ({
         ...base,
@@ -37,78 +40,213 @@ const customStyles = {
         ...base,
         fontSize: '14px',
         color: '#aaa',
-        opacity:'0.7',
+        opacity: '0.7',
     }),
 };
 
 const Home = () => {
+    const [formData, setFormData] = useState({
+        email: '',
+        phone: '',
+        country: null,
+        accountType: null,
+        ageRange: null
+    });
+
+    const [errors, setErrors] = useState({});
+    const [countries, setCountries] = useState([])
     const options = [
         { value: 'customised_instant', label: 'Customised Instant funding' },
         { value: 'customised_2step', label: 'Customised 2 step funding' },
         { value: 'standard_instant', label: 'Standard Instant funding' },
         { value: 'standard_2step', label: 'Standard 2 step funding' },
     ];
+
+    const ageRange = [
+        { value: 'below-18', label: 'below-18 Years' },
+        { value: '18-25', label: '18-25 Years' },
+        { value: '26-35', label: '26-35 Years' },
+        { value: '36-45', label: '36-45 Years' },
+        { value: '45-above', label: '45-above Years' },
+    ];
+
+    useEffect(() => {
+        callApi()
+    },[])
+
+    const callApi = async () => {
+        try {
+            const result = await axios.get(`${apiUrl}users/countries`)
+
+            if (result?.data?.success) {
+                const formattedCountries = result?.data?.data.map((c) => ({
+                    value: c.name,
+                    label: c.name
+                }));
+                setCountries(formattedCountries);
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleChange = (field, value) => {
+        setFormData({ ...formData, [field]: value });
+        setErrors({ ...errors, [field]: '' }); // Clear error
+    };
+
+    const validateForm = () => {
+        const newErrors = {};
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!formData.email.trim()) {
+            newErrors.email = 'Email is required';
+        } else if (!emailRegex.test(formData.email)) {
+            newErrors.email = 'Enter a valid email address';
+        }
+
+        if (!formData.phone.trim()) newErrors.phone = 'Phone is required';
+        if (!formData.country) newErrors.country = 'Country is required';
+        if (!formData.accountType) newErrors.accountType = 'Account type is required';
+        if (!formData.ageRange) newErrors.ageRange = 'Age range is required';
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+
+    const handleSubmit = async () => {
+        if (!validateForm()) return;
+
+        try {
+const payload={
+    email:formData.email,
+    phone:formData.phone,
+    country:formData.country.value,
+    ageRange:formData.ageRange.value,
+    accountType:formData.accountType.value
+}
+
+            const response = await axios.post(`${apiUrl}users/waitlist`, payload);
+            if (response.status == 201 && response.data.success) {
+
+                toast.success(response.data.message, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    //transition: Bounce,
+                })
+            } else {
+                toast.error(response.data.message, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    //transition: Bounce,
+                })
+
+            }
+
+        } catch (error) {
+            toast.error(error)
+
+        }
+    };
+
     return (
-        <section className='main-page-wrapped'>
-            <div className='bg-img'>
-                <div data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500" className='main-heading bg-card     '>
-                    <TypeAnimation
-                        sequence={[
-                            'Built for Traders',
-                            1000,
-                            'Backed by Professionals!',
-                            1000,
-                        ]}
+        <><ToastContainer />
+            <section className='main-page-wrapped'>
 
-                        wrapper="span"
-                        speed={0.5}
-                        style={{ fontSize: '2em', display: 'inline-block' }}
-                        repeat={Infinity}
-                    />
-                </div>
-                <div data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500" className='logo'>
-                    {/* <h1 className='framer-text' data-text-fill="true" >ARC</h1> */}
-                    <img src='images/logo.png'/>
-                </div>
-                <div data-aos="fade-right" data-aos-duration="1000" data-aos-easing="ease-in-sine">
-                    <div className='bg-card form-box'>
-                        <form>
-                            <div className='input-box w-half'>
-                                <label>Email</label>
-                                <input type='text' placeholder='Enter your Email' />
-                            </div>
-                            <div className='input-box w-half'>
-                                <label>Phone</label>
-                                <input type='text' placeholder='Enter your Phone' />
-                            </div>
-                            <div className='input-box w-half'>
-                                <label>Country</label>
-                                <input type='text' placeholder='Enter your Country' />
-                            </div>
-                            <div className='input-box w-half'>
-                                <label>Preferred Account Type</label>
-                                <Select
-                                    options={options}
-                                    styles={customStyles}
-                                    placeholder="Select account"
-                                    // value={value}
-                                    // onChange={onChange}
-                                    isSearchable={false}
-                                />
-                            </div>
-                            <div className='input-box w-half'>
-                                <label>Age</label>
-                                <input type='text' placeholder='Age' />
-                            </div>
-                            <div className='animated-button'>
-                                <button className="glow-on-hover" type="button">JOIN WAITLIST</button>
-                            </div>
-                        </form>
+                <div className='bg-img'>
+                    <div data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500" className='main-heading bg-card     '>
+                        <TypeAnimation
+                            sequence={[
+                                'Built for Traders',
+                                1000,
+                                'Backed by Professionals!',
+                                1000,
+                            ]}
+
+                            wrapper="span"
+                            speed={0.5}
+                            style={{ fontSize: '2em', display: 'inline-block' }}
+                            repeat={Infinity}
+                        />
                     </div>
-                </div>
+                    <div data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500" className='logo'>
+                        {/* <h1 className='framer-text' data-text-fill="true" >ARC</h1> */}
+                        <img src='images/logo.png' />
+                    </div>
+                    <div data-aos="fade-right" data-aos-duration="1000" data-aos-easing="ease-in-sine">
+                        <div className='bg-card form-box'>
+                            <form>
+                                <div className='input-box w-half'>
+                                    <label>Email</label>
+                                    <input type='text' placeholder='Enter your Email' value={formData.email}
+                                        onChange={(e) => handleChange('email', e.target.value)} />
+                                    {errors.email && <div className="error">{errors.email}</div>}
+                                </div>
+                                <div className='input-box w-half'>
+                                    <label>Phone</label>
+                                    <input type='text' placeholder='Enter your Phone' value={formData.phone}
+                                        onChange={(e) => handleChange('phone', e.target.value)} />
+                                    {errors.phone && <div className="error">{errors.phone}</div>}
+                                </div>
+                                <div className='input-box w-half'>
+                                    <label>Country</label>
+                                    <Select
+                                        options={countries}
+                                        styles={customStyles}
+                                        placeholder="Select Country"
+                                        value={formData.country}
+                                        onChange={(selected) => handleChange('country', selected)}
+                                        isSearchable={true}
+                                    />
+                                    {errors.country && <div className="error">{errors.country}</div>}
+                                </div>
+                                <div className='input-box w-half'>
+                                    <label>Preferred Account Type</label>
+                                    <Select
+                                        options={options}
+                                        styles={customStyles}
+                                        placeholder="Select account"
+                                        value={formData.accountType}
+                                        onChange={(selected) => handleChange('accountType', selected)}
+                                        isSearchable={false}
+                                    />
+                                    {errors.accountType && <div className="error">{errors.accountType}</div>}
+                                </div>
+                                <div className='input-box w-half'>
+                                    <label>Age</label>
+                                    <Select
+                                        options={ageRange}
+                                        styles={customStyles}
+                                        placeholder="Select age range"
+                                        value={formData.ageRange}
+                                        onChange={(selected) => handleChange('ageRange', selected)}
+                                        isSearchable={false}
+                                    />
+                                    {errors.ageRange && <div className="error">{errors.ageRange}</div>}
+                                </div>
+                                <div className='animated-button'>
+                                    <button className="glow-on-hover" type="button" onClick={() => handleSubmit()}>JOIN WAITLIST</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
 
-            </div>
-        </section>
+                </div>
+            </section>
+        </>
     )
 }
 
