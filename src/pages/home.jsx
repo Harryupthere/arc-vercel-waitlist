@@ -50,17 +50,24 @@ const Home = () => {
         phone: '',
         country: null,
         accountType: null,
-        ageRange: null
+        ageRange: null,
+        countryCode:'',
+        name:''
     });
 
     const [errors, setErrors] = useState({});
     const [countries, setCountries] = useState([])
+    const [countriesCode, setCountriesCode] = useState([])
+
     const options = [
-        { value: 'customised_instant', label: 'Customised Instant funding' },
-        { value: 'customised_2step', label: 'Customised 2 step funding' },
-        { value: 'standard_instant', label: 'Standard Instant funding' },
-        { value: 'standard_2step', label: 'Standard 2 step funding' },
+        { value: '8000', label: '$8,000' },
+        { value: '15000', label: '$15,000' },
+        { value: '25000', label: '$25,000' },
+        { value: '50000', label: '$50,000' },
+        { value: '100000', label: '$100,000' },
+        { value: '200000', label: '$200,000' },
     ];
+
 
     const ageRange = [
         { value: 'below-18', label: 'below-18 Years' },
@@ -72,7 +79,7 @@ const Home = () => {
 
     useEffect(() => {
         callApi()
-    },[])
+    }, [])
 
     const callApi = async () => {
         try {
@@ -84,6 +91,12 @@ const Home = () => {
                     label: c.name
                 }));
                 setCountries(formattedCountries);
+
+                const formattedCountriesCode = result?.data?.data.map((c) => ({
+                    value: c.code,
+                    label: `+${c.code}`
+                }));
+                setCountriesCode(formattedCountriesCode);
             }
         } catch (error) {
             console.log(error)
@@ -104,8 +117,9 @@ const Home = () => {
         } else if (!emailRegex.test(formData.email)) {
             newErrors.email = 'Enter a valid email address';
         }
-
+        if (!formData.name) newErrors.name = 'Full name is required';
         if (!formData.phone.trim()) newErrors.phone = 'Phone is required';
+        if (!formData.countryCode) newErrors.phone = 'Country code is required';
         if (!formData.country) newErrors.country = 'Country is required';
         if (!formData.accountType) newErrors.accountType = 'Account type is required';
         if (!formData.ageRange) newErrors.ageRange = 'Age range is required';
@@ -119,13 +133,15 @@ const Home = () => {
         if (!validateForm()) return;
 
         try {
-const payload={
-    email:formData.email,
-    phone:formData.phone,
-    country:formData.country.value,
-    ageRange:formData.ageRange.value,
-    accountType:formData.accountType.value
-}
+
+            const payload = {
+                email: formData.email,
+                phone: `+${formData.countryCode.value}-${formData.phone}`,
+                country: formData.country.value,
+                ageRange: formData.ageRange.value,
+                accountType: formData.accountType.value,
+                name:formData.name
+            }
 
             const response = await axios.post(`${apiUrl}users/waitlist`, payload);
             if (response.status == 201 && response.data.success) {
@@ -190,17 +206,57 @@ const payload={
                         <div className='bg-card form-box'>
                             <form>
                                 <div className='input-box w-half'>
-                                    <label>Email</label>
+                                    <label>Please enter your Full Name</label>
+                                    <input type='text' placeholder='Enter your full name' value={formData.name}
+                                        onChange={(e) => handleChange('name', e.target.value)} />
+                                    {errors.name && <div className="error">{errors.name}</div>}
+                                </div>
+                                <div className='input-box w-half'>
+                                    <label>Please enter your Email</label>
                                     <input type='text' placeholder='Enter your Email' value={formData.email}
                                         onChange={(e) => handleChange('email', e.target.value)} />
                                     {errors.email && <div className="error">{errors.email}</div>}
                                 </div>
-                                <div className='input-box w-half'>
+                                {/* <div className='input-box w-half'>
                                     <label>Phone</label>
                                     <input type='text' placeholder='Enter your Phone' value={formData.phone}
                                         onChange={(e) => handleChange('phone', e.target.value)} />
                                     {errors.phone && <div className="error">{errors.phone}</div>}
+                                </div> */}
+                                <div className='input-box w-half'>
+                                    <label>Country Code & Phone Number</label>
+                                    <div style={{ display: 'flex', gap: '8px' }}>
+                                        <div style={{ width: '35%' }}>
+                                            <Select
+                                                options={countriesCode}
+                                                styles={customStyles}
+                                                placeholder="Code"
+                                                value={formData.countryCode}
+                                                onChange={(selected) => handleChange('countryCode', selected)}
+                                                isSearchable={true}
+                                            />
+                                        </div>
+                                        <input
+                                            type='text'
+                                            placeholder='Enter your Phone'
+                                            value={formData.phone}
+                                            onChange={(e) => handleChange('phone', e.target.value)}
+                                            style={{
+                                                width: '65%',
+                                                borderRadius: '30px',
+                                                border: '0.5px solid rgba(153, 153, 153, 0.567)',
+                                                backgroundColor: '#000',
+                                                color: '#fff',
+                                                padding: '0 15px',
+                                                fontSize: '14px',
+                                                height: '45px',
+                                                outline: 'none'
+                                            }}
+                                        />
+                                    </div>
+                                    {errors.phone && <div className="error">{errors.phone}</div>}
                                 </div>
+
                                 <div className='input-box w-half'>
                                     <label>Country</label>
                                     <Select
@@ -214,11 +270,11 @@ const payload={
                                     {errors.country && <div className="error">{errors.country}</div>}
                                 </div>
                                 <div className='input-box w-half'>
-                                    <label>Preferred Account Type</label>
+                                    <label>Preferred Account Size</label>
                                     <Select
                                         options={options}
                                         styles={customStyles}
-                                        placeholder="Select account"
+                                        placeholder="Select account size"
                                         value={formData.accountType}
                                         onChange={(selected) => handleChange('accountType', selected)}
                                         isSearchable={false}

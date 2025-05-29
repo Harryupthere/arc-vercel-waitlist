@@ -160,6 +160,7 @@ a {
 
 		@media (max-width:768px) {
 			font-size: 12px;
+			// height: 60px; // 👈 this only applies in mobile view
 		}
 
 		&.bg-card {
