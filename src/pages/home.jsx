@@ -51,8 +51,8 @@ const Home = () => {
         country: null,
         accountType: null,
         ageRange: null,
-        countryCode:'',
-        name:''
+        countryCode: '',
+        name: ''
     });
 
     const [errors, setErrors] = useState({});
@@ -92,11 +92,31 @@ const Home = () => {
                 }));
                 setCountries(formattedCountries);
 
-                const formattedCountriesCode = result?.data?.data.map((c) => ({
-                    value: c.code,
-                    label: `+${c.code}`
-                }));
-                setCountriesCode(formattedCountriesCode);
+                // const formattedCountriesCode = result?.data?.data.map((c) => ({
+                //     value: c.code,
+                //     label: `+${c.code}`
+                // }));
+                // setCountriesCode(formattedCountriesCode); // here 
+
+                const result2 = await axios.get('https://restcountries.com/v3.1/all');
+console.log(result2)
+                const formatted = result2.data.map((c) => {
+                    const callingCode = c.idd?.root && c.idd?.suffixes?.length
+                        ? `${c.idd.root}${c.idd.suffixes[0]}`
+                        : '';
+
+                    return {
+                        value: callingCode,
+                        label: c.name.common,
+                        flag: c.flags?.png || '',
+                        code: callingCode,
+                    };
+                }).filter(c => c.value); // Remove entries without calling code
+
+                // Optional: sort alphabetically
+                formatted.sort((a, b) => a.label.localeCompare(b.label));
+
+                setCountriesCode(formatted);
             }
         } catch (error) {
             console.log(error)
@@ -140,7 +160,7 @@ const Home = () => {
                 country: formData.country.value,
                 ageRange: formData.ageRange.value,
                 accountType: formData.accountType.value,
-                name:formData.name
+                name: formData.name
             }
 
             const response = await axios.post(`${apiUrl}users/waitlist`, payload);
@@ -177,6 +197,15 @@ const Home = () => {
 
         }
     };
+
+    const formatOptionLabel = ({ label, flag, code }) => (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <img src={flag} alt="flag" width="20" height="15" />
+            <span>{label}</span>
+            <span style={{ marginLeft: 'auto', color: '#666' }}>+{code}</span>
+        </div>
+    );
+
 
     return (
         <><ToastContainer />
@@ -227,6 +256,14 @@ const Home = () => {
                                     <label>Country Code & Phone Number</label>
                                     <div style={{ display: 'flex', gap: '8px' }}>
                                         <div style={{ width: '35%' }}>
+                                            {/* <Select
+                                                options={countriesCode}
+                                                styles={customStyles}
+                                                placeholder="Code"
+                                                value={formData.countryCode}
+                                                onChange={(selected) => handleChange('countryCode', selected)}
+                                                isSearchable={true}
+                                            /> */}
                                             <Select
                                                 options={countriesCode}
                                                 styles={customStyles}
@@ -234,6 +271,7 @@ const Home = () => {
                                                 value={formData.countryCode}
                                                 onChange={(selected) => handleChange('countryCode', selected)}
                                                 isSearchable={true}
+                                                formatOptionLabel={formatOptionLabel}
                                             />
                                         </div>
                                         <input
