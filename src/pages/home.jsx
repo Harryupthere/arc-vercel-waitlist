@@ -24,7 +24,7 @@ const customStyles = {
         color: '#fff',
         borderRadius: '10px',
         zIndex: 10,
-        fontSize: '14px'
+        fontSize: '14px',
     }),
     option: (base, state) => ({
         ...base,
@@ -44,6 +44,56 @@ const customStyles = {
     }),
 };
 
+const countryStyle = {
+    control: (base) => ({
+        ...base,
+        // position:'absolute',
+        border: '0.5px solid rgba(153, 153, 153, 0.567)',
+        borderRight: 'none',
+        backgroundColor: '#000',
+        borderRadius: '30px 0 0 30px',
+        padding: '0',
+        color: '#fff',
+        outline: 'none',
+        boxShadow: 'none',
+        fontSize: '14px',
+        height: '45px',
+        minWidth: '120px',
+        width: 'auto'
+    }),
+    dropdownIndicator: (base) => ({
+        ...base,
+        borderLeft: 'none', // removes the left border
+        padding: '0',      // optional: adjust padding if needed
+    }),
+    indicatorSeparator: () => ({
+        display: 'none',     // removes the vertical separator line
+    }),
+    menu: (base) => ({
+        ...base,
+        backgroundColor: '#000',
+        color: '#fff',
+        borderRadius: '10px',
+        zIndex: 10,
+        fontSize: '14px',
+    }),
+    option: (base, state) => ({
+        ...base,
+        backgroundColor: state.isFocused ? '#333' : '#000',
+        color: '#fff',
+        cursor: 'pointer',
+    }),
+    singleValue: (base) => ({
+        ...base,
+        color: '#fff',
+    }),
+    placeholder: (base) => ({
+        ...base,
+        fontSize: '14px',
+        color: '#aaa',
+        opacity: '0.7',
+    }),
+};
 const Home = () => {
     const [formData, setFormData] = useState({
         email: '',
@@ -99,7 +149,7 @@ const Home = () => {
                 // setCountriesCode(formattedCountriesCode); // here 
 
                 const result2 = await axios.get('https://restcountries.com/v3.1/all');
-console.log(result2)
+                console.log(result2)
                 const formatted = result2.data.map((c) => {
                     const callingCode = c.idd?.root && c.idd?.suffixes?.length
                         ? `${c.idd.root}${c.idd.suffixes[0]}`
@@ -201,8 +251,8 @@ console.log(result2)
     const formatOptionLabel = ({ label, flag, code }) => (
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <img src={flag} alt="flag" width="20" height="15" />
-            <span>{label}</span>
-            <span style={{ marginLeft: 'auto', color: '#666' }}>+{code}</span>
+            {/* <span>{label}</span> */}
+            <span>{code}</span>
         </div>
     );
 
@@ -212,7 +262,8 @@ console.log(result2)
             <section className='main-page-wrapped'>
 
                 <div className='bg-img'>
-                    <div data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500" className='main-heading bg-card     '>
+                    <div className='height-in-mobile'>
+                    <div data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500" className='main-heading bg-card'>
                         <TypeAnimation
                             sequence={[
                                 'Built for Traders',
@@ -226,6 +277,7 @@ console.log(result2)
                             style={{ fontSize: '2em', display: 'inline-block' }}
                             repeat={Infinity}
                         />
+                    </div>
                     </div>
                     <div data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500" className='logo'>
                         {/* <h1 className='framer-text' data-text-fill="true" >ARC</h1> */}
@@ -253,44 +305,25 @@ console.log(result2)
                                     {errors.phone && <div className="error">{errors.phone}</div>}
                                 </div> */}
                                 <div className='input-box w-half'>
-                                    <label>Country Code & Phone Number</label>
+                                    <label>Phone Number</label>
                                     <div style={{ display: 'flex', gap: '8px' }}>
-                                        <div style={{ width: '35%' }}>
-                                            {/* <Select
-                                                options={countriesCode}
-                                                styles={customStyles}
-                                                placeholder="Code"
-                                                value={formData.countryCode}
-                                                onChange={(selected) => handleChange('countryCode', selected)}
-                                                isSearchable={true}
-                                            /> */}
+                                        <div className='country-dropdown d-flex'>
                                             <Select
                                                 options={countriesCode}
-                                                styles={customStyles}
+                                                styles={countryStyle}
                                                 placeholder="Code"
                                                 value={formData.countryCode}
                                                 onChange={(selected) => handleChange('countryCode', selected)}
                                                 isSearchable={true}
                                                 formatOptionLabel={formatOptionLabel}
                                             />
+                                            <input
+                                                type='text'
+                                                placeholder='Enter your Phone'
+                                                value={formData.phone}
+                                                onChange={(e) => handleChange('phone', e.target.value)}
+                                            />
                                         </div>
-                                        <input
-                                            type='text'
-                                            placeholder='Enter your Phone'
-                                            value={formData.phone}
-                                            onChange={(e) => handleChange('phone', e.target.value)}
-                                            style={{
-                                                width: '65%',
-                                                borderRadius: '30px',
-                                                border: '0.5px solid rgba(153, 153, 153, 0.567)',
-                                                backgroundColor: '#000',
-                                                color: '#fff',
-                                                padding: '0 15px',
-                                                fontSize: '14px',
-                                                height: '45px',
-                                                outline: 'none'
-                                            }}
-                                        />
                                     </div>
                                     {errors.phone && <div className="error">{errors.phone}</div>}
                                 </div>
