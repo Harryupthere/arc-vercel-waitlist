@@ -150,11 +150,7 @@ a {
 			}
 		}
 	}
-	@media (max-width:768px) {
-	.height-in-mobile{
-		height: 60px;
-	}
-}
+
 	.main-heading {
 		text-align: center;
 		color: #fff;
@@ -163,8 +159,7 @@ a {
 		text-transform: uppercase;
 
 		@media (max-width:768px) {
-			font-size: 12px;
-			// height: 60px; // 👈 this only applies in mobile view
+			font-size: 10px;
 		}
 
 		&.bg-card {
@@ -173,6 +168,11 @@ a {
 			margin: auto;
 			margin-bottom: 0;
 			border-radius: 20px;
+
+			@media (max-width:768px) {
+				padding: 5px 10px;
+
+			}
 		}
 	}
 
@@ -202,6 +202,7 @@ a {
 
 		.input-box {
 			.country-dropdown {
+				width: 100%;
 
 				// position:	 absolute;
 				input {

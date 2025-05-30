@@ -56,9 +56,9 @@ const countryStyle = {
         color: '#fff',
         outline: 'none',
         boxShadow: 'none',
-        fontSize: '14px',
+        fontSize: '13px',
         height: '45px',
-        minWidth: '120px',
+        minWidth: '100px',
         width: 'auto'
     }),
     dropdownIndicator: (base) => ({
@@ -249,8 +249,8 @@ const Home = () => {
     };
 
     const formatOptionLabel = ({ label, flag, code }) => (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <img src={flag} alt="flag" width="20" height="15" />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <img src={flag} alt="flag" width="18px" height="15" />
             {/* <span>{label}</span> */}
             <span>{code}</span>
         </div>
@@ -262,7 +262,6 @@ const Home = () => {
             <section className='main-page-wrapped'>
 
                 <div className='bg-img'>
-                    <div className='height-in-mobile'>
                     <div data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500" className='main-heading bg-card'>
                         <TypeAnimation
                             sequence={[
@@ -277,7 +276,6 @@ const Home = () => {
                             style={{ fontSize: '2em', display: 'inline-block' }}
                             repeat={Infinity}
                         />
-                    </div>
                     </div>
                     <div data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500" className='logo'>
                         {/* <h1 className='framer-text' data-text-fill="true" >ARC</h1> */}
