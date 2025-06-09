@@ -3,6 +3,7 @@ import { TypeAnimation } from 'react-type-animation';
 import Select from 'react-select';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import { allCountries } from 'country-telephone-data';
 const apiUrl = 'https://myapi.myarcfunding.com/api/v1/'; // Replace with your actual API base URL
 
 const customStyles = {
@@ -133,50 +134,57 @@ const Home = () => {
 
     const callApi = async () => {
         try {
-            const result = await axios.get(`${apiUrl}users/countries`)
 
-            if (result?.data?.success) {
-                const formattedCountries = result?.data?.data.map((c) => ({
-                    value: c.name,
-                    label: c.name
-                }));
-                setCountries(formattedCountries);
 
-                // const formattedCountriesCode = result?.data?.data.map((c) => ({
-                //     value: c.code,
-                //     label: `+${c.code}`
-                // }));
-                // setCountriesCode(formattedCountriesCode); // here 
+            const formatted = allCountries.map(c => ({
+                value: `+${c.dialCode}`,
+                label: c.name,
+                flag: `https://flagcdn.com/48x36/${c.iso2}.png`,
+                code: `+${c.dialCode}`,
+            })).filter(c => c.value);
 
-                const result2 = await axios.get('https://restcountries.com/v3.1/all');
-                console.log(result2)
-                const formatted = result2.data.map((c) => {
-                    const callingCode = c.idd?.root && c.idd?.suffixes?.length
-                        ? `${c.idd.root}${c.idd.suffixes[0]}`
-                        : '';
+            const formatted1 = allCountries.map(c => ({
+                value: c.name,
+                label: c.name,
+                flag: `https://flagcdn.com/48x36/${c.iso2}.png`,
+                code: c.dialCode,
+            })).filter(c => c.value);
 
-                    return {
-                        value: callingCode,
-                        label: c.name.common,
-                        flag: c.flags?.png || '',
-                        code: callingCode,
-                    };
-                }).filter(c => c.value); // Remove entries without calling code
+            formatted.sort((a, b) => a.label.localeCompare(b.label));
+            formatted1.sort((a, b) => a.label.localeCompare(b.label));
 
-                // Optional: sort alphabetically
-                formatted.sort((a, b) => a.label.localeCompare(b.label));
-
-                setCountriesCode(formatted);
-            }
+            setCountries(formatted1)
+            setCountriesCode(formatted);
+            //}
         } catch (error) {
             console.log(error)
         }
     }
 
-    const handleChange = (field, value) => {
-        setFormData({ ...formData, [field]: value });
-        setErrors({ ...errors, [field]: '' }); // Clear error
-    };
+const handleChange = (field, value) => {
+    const updatedFormData = { ...formData, [field]: value };
+    const updatedErrors = { ...errors, [field]: '' };
+
+    // If the user selects a country, auto-set the country code
+    if (field === 'country') {
+        const match = countriesCode.find(c => value?.label === c.label);
+        if (match) {
+            updatedFormData.countryCode = match;
+        }
+    }
+
+    // If the user selects a country code, auto-set the country
+    if (field === 'countryCode') {
+        const match = countries.find(c => c.label === value?.label);
+        if (match) {
+            updatedFormData.country = match;
+        }
+    }
+
+    setFormData(updatedFormData);
+    setErrors(updatedErrors);
+};
+
 
     const validateForm = () => {
         const newErrors = {};
@@ -216,7 +224,7 @@ const Home = () => {
             const response = await axios.post(`${apiUrl}users/waitlist`, payload);
             if (response.status == 201 && response.data.success) {
 
-                toast.success(response.data.message, {
+                toast.success("Congratulations! ARC Funding is ready to back your potential.", {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -227,6 +235,12 @@ const Home = () => {
                     theme: "light",
                     //transition: Bounce,
                 })
+
+                // Reload after 3 seconds
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
+
             } else {
                 toast.error(response.data.message, {
                     position: "top-right",
@@ -296,12 +310,18 @@ const Home = () => {
                                         onChange={(e) => handleChange('email', e.target.value)} />
                                     {errors.email && <div className="error">{errors.email}</div>}
                                 </div>
-                                {/* <div className='input-box w-half'>
-                                    <label>Phone</label>
-                                    <input type='text' placeholder='Enter your Phone' value={formData.phone}
-                                        onChange={(e) => handleChange('phone', e.target.value)} />
-                                    {errors.phone && <div className="error">{errors.phone}</div>}
-                                </div> */}
+                                <div className='input-box w-half'>
+                                    <label>Country</label>
+                                    <Select
+                                        options={countries}
+                                        styles={customStyles}
+                                        placeholder="Select Country"
+                                        value={formData.country}
+                                        onChange={(selected) => handleChange('country', selected)}
+                                        isSearchable={true}
+                                    />
+                                    {errors.country && <div className="error">{errors.country}</div>}
+                                </div>
                                 <div className='input-box w-half'>
                                     <label>Phone Number</label>
                                     <div style={{ display: 'flex', gap: '8px' }}>
@@ -326,18 +346,7 @@ const Home = () => {
                                     {errors.phone && <div className="error">{errors.phone}</div>}
                                 </div>
 
-                                <div className='input-box w-half'>
-                                    <label>Country</label>
-                                    <Select
-                                        options={countries}
-                                        styles={customStyles}
-                                        placeholder="Select Country"
-                                        value={formData.country}
-                                        onChange={(selected) => handleChange('country', selected)}
-                                        isSearchable={true}
-                                    />
-                                    {errors.country && <div className="error">{errors.country}</div>}
-                                </div>
+
                                 <div className='input-box w-half'>
                                     <label>Preferred Account Size</label>
                                     <Select
