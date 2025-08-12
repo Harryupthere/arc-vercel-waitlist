@@ -1,55 +1,49 @@
-@import 'bootstrap/dist/css/bootstrap.min.css';
-
 * {
 	padding: 0px;
 	margin: 0px;
 	box-sizing: border-box;
 }
 
-@font-face {
-	font-family: "Poppins";
-	src: url("../fonts/Poppins/Poppins-ExtraBold.ttf");
-	font-weight: 900;
-}
+// @font-face {
+// 	font-family: "Poppins";
+// 	src: url("../fonts/Poppins/Poppins-ExtraBold.ttf");
+// 	font-weight: 900;
+// }
 
-@font-face {
-	font-family: "Poppins";
-	src: url("../fonts/Poppins/Poppins-Bold.ttf");
-	font-weight: 700;
-}
+// @font-face {
+// 	font-family: "Poppins";
+// 	src: url("../fonts/Poppins/Poppins-Bold.ttf");
+// 	font-weight: 700;
+// }
 
-@font-face {
-	font-family: "Poppins";
-	src: url("../fonts/Poppins/Poppins-SemiBold.ttf");
-	font-weight: 600;
-}
+// @font-face {
+// 	font-family: "Poppins";
+// 	src: url("../fonts/Poppins/Poppins-SemiBold.ttf");
+// 	font-weight: 600;
+// }
 
-@font-face {
-	font-family: "Poppins";
-	src: url("../fonts/Poppins/Poppins-Medium.ttf");
-	font-weight: 500;
-}
+// @font-face {
+// 	font-family: "Poppins";
+// 	src: url("../fonts/Poppins/Poppins-Medium.ttf");
+// 	font-weight: 500;
+// }
 
-@font-face {
-	font-family: "Poppins";
-	src: url("../fonts/Poppins/Poppins-Regular.ttf");
-	font-weight: 400;
-}
+// @font-face {
+// 	font-family: "Poppins";
+// 	src: url("../fonts/Poppins/Poppins-Regular.ttf");
+// 	font-weight: 400;
+// }
 
-@font-face {
-	font-family: "Poppins";
-	src: url("../fonts/Poppins/Poppins-Light.ttf");
-	font-weight: 300;
-}
-
-@font-face {
-	font-family: "Outfit";
-	src: url("../fonts/Outfit/static/Outfit-ExtraBold.ttf");
-	font-weight: 900;
-}
+// @font-face {
+// 	font-family: "Poppins";
+// 	src: url("../fonts/Poppins/Poppins-Light.ttf");
+// 	font-weight: 300;
+// }
 
 body {
-	font-family: "Poppins";
+	// font-family: "Poppins";
+	font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+	color: #e6eef8;
 }
 
 a {

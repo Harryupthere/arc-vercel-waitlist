@@ -192,7 +192,7 @@ const Home3 = () => {
       </section>
       <section className="how" aria-label="How ARC Funding works">
         <div className="how-steps" aria-hidden="false">
-          <h3 style={{ marginTop: 0 }}>How It Works</h3>
+          <h3 style={{ marginTop: 0 ,fontSize:'20px'}}>How It Works</h3>
           <ol>
             <li><strong>Join the Waitlist Today</strong> — It's free and takes ~10 seconds.</li>
             <li><strong>Receive Exclusive Updates</strong> — Priority access, launch offers, account selection.</li>

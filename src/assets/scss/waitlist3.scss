@@ -7,6 +7,7 @@
       --glass: rgba(138,43,226,0.2);
       --max-width:1100px;
       --radius:14px;
+      --muted:#9aa7bf;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -32,7 +33,7 @@
 
     .container{
       width:100%;
-      max-width:var(--max-width);
+      max-width:1100px;
     }
 
     /* Header / hero card */
@@ -182,16 +183,17 @@
       margin-top:28px;
       display:flex;
       gap:18px;
+      flex-direction: column;
       align-items:flex-start;
       flex-wrap:wrap;
     }
     .how-steps{
       flex:1;
-      min-width:260px;
       background:rgba(0,0,0,0.3);
       padding:16px;
       border-radius:12px;
       border:1px solid rgba(138,43,226,0.2);
+      width: 100%;
     }
     .how-steps ol{margin:0;padding-left:18px;color:var(--muted)}
     .final-cta{
@@ -207,6 +209,15 @@
       border-radius:12px;
       width:100%;
       border:1px solid rgba(138,43,226,0.3);
+    }
+    .final-cta .card h4{
+      color: #e6eef8;
+      font-size: 20px;
+    }
+    .final-cta .card .btn{
+      font-weight: 600;
+      color: #fff;
+      width: fit-content;
     }
     footer{
       margin-top:28px;
@@ -243,9 +254,6 @@
       color: transparent;
     }
 
-    h1, h3, h4, strong {
-      color: #fff;
-    }
 
     .subtitle {
       font-size: 14px;
