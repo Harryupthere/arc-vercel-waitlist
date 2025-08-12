@@ -156,6 +156,8 @@ const Home = () => {
             setCountries(formatted1)
             setCountriesCode(formatted);
             //}
+
+           // let mebersCount=await axios.get(`${apiUrl}users/members`);   
         } catch (error) {
             console.log(error)
         }
