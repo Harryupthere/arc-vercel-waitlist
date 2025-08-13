@@ -3,7 +3,7 @@
  import Home from '../pages/home';
  import WaitlistPage from '../pages/home2';
  import Home3 from '../pages/home3';
-import PrivacyPolicy from '../pages/PrivacyPolicy';
+import PrivacyPolicy from '../pages/privacyPolicy';
 import TermsAndConditions from '../pages/TermsAndConditions';
 // const RoutesMain = () => {
 //   return (
