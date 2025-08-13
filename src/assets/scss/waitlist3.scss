@@ -1,7 +1,7 @@
 :root{
       --bg: #0a0a0a;
       --card: rgba(0,0,0,0.4);
-      --accent: #9c27b0;
+      --accent: #e47af7;
       --accent-2: #2dd4bf;
       --muted: #9aa7bf;
       --glass: rgba(138,43,226,0.2);
@@ -14,7 +14,8 @@
     body{
       margin:0;
       font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: white;//linear-gradient(135deg, #0a0a0a 0%, #1a0033 25%, #2d1b4e 50%, #4a148c 75%, #6a1b9a 100%);
+      //background:linear-gradient(135deg, #0a0a0a 0%, #1a0033 25%, #2d1b4e 50%, #4a148c 75%, #6a1b9a 100%);
+      background:white;//linear-gradient(135deg, #e3e1e1 0%, #fbfbfb 25%, #5c5c5c 50%, #949494 75%, #bdbdbd 100%);
       background-size: 400% 400%;
       animation: gradientShift 8s ease infinite;
       color:#e6eef8;
@@ -146,7 +147,9 @@
       font-weight:600;
     }
     .muted-note{font-size:13px;color:var(--muted);margin-top:8px}
-
+        .error {
+            color: red;
+        }
     .features{
       margin-top:18px;
       display:grid;
@@ -154,15 +157,21 @@
       gap:12px;
     }
     @media (max-width:720px){ .features{grid-template-columns:1fr} }
-    .feature{
-      background:rgba(0,0,0,0.3);
-      padding:14px;
-      border-radius:10px;
-      border:1px solid rgba(138,43,226,0.2);
-    }
-    .feature h4{margin:0 0 8px 0;font-size:15px}
-    .feature p{margin:0;color:var(--muted);font-size:14px}
-
+ .feature {
+  background: white; // or rgba(0,0,0,0.3) for dark
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(138,43,226,0.2);
+}
+.feature h4 {
+  margin: 0 0 8px 0;
+  font-size: 15px;
+  color: black;
+}
+.feature p {
+  margin: 0;
+  font-size: 14px;
+}
     /* FOMO section */
     .fomo{
       margin-top:20px;
@@ -451,10 +460,4 @@
       .feature p {
         font-size: 12px;
       }
-    }
-
-    .selected-tab {
-      background: linear-gradient(90deg, var(--accent), var(--accent-2)) !important;
-      color: #fff !important;
-      font-weight: 700 !important;
     }
