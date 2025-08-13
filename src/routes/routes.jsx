@@ -3,6 +3,8 @@
  import Home from '../pages/home';
  import WaitlistPage from '../pages/home2';
  import Home3 from '../pages/home3';
+import PrivacyPolicy from '../pages/privacyPolicy';
+import TermsConditionTabs from '../pages/termsOfUse';
 // const RoutesMain = () => {
 //   return (
 //     <Router>
@@ -20,10 +22,14 @@ const RoutesMain = () => {
     <Router>
       <Routes>
         {/* Redirect root "/" to "/waitlist" */}
-        <Route path="/" element={<Navigate to="/waitlist" />} />
+        {/* <Route path="/" element={<Navigate to="/waitlist" />} /> */}
 
         {/* Waitlist page at /waitlist */}
-        <Route path="/waitlist" element={<Home3 />} />
+        <Route path="/" element={<Home3 />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-use" element={<TermsConditionTabs />} />
+
+
 
         {/* Home page at /home (if needed) */}
         {/* <Route path="/home" element={<Home />} /> */}
