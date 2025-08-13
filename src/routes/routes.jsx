@@ -22,7 +22,7 @@ const RoutesMain = () => {
     <Router>
       <Routes>
         {/* Redirect root "/" to "/waitlist" */}
-        {/* <Route path="/" element={<Navigate to="/waitlist" />} /> */}
+        <Route path="/" element={<Navigate to="/waitlist" />} />
 
         {/* Waitlist page at /waitlist */}
         <Route path="/waitlist" element={<Home3 />} />
