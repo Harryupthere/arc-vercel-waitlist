@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../assets/scss/termsAndConditions.scss';
+import '../assets/scss/TermsAndConditions.scss';
 
 const TermsAndConditions = () => {
   const [activeTab, setActiveTab] = useState('introductory-provisions');
