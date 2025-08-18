@@ -1,14 +1,22 @@
 :root {
   --bg: #0f172a;
   --bg-secondary: #1e293b;
-  --card: rgba(15, 23, 42, 0.8);
+//  --card: rgba(15, 23, 42, 0.8);
+  --card: white;//rgba(15, 23, 42, 0.8);
+  --card-waitlist: rgba(15, 23, 42, 0.8);
+
   --card-hover: rgba(15, 23, 42, 0.9);
   --accent: #0ea5e9;
   --accent-2: #06b6d4;
   --accent-3: #fbbf24;
   --muted: #94a3b8;
-  --text-primary: #f1f5f9;
+  //--text-primary: #f1f5f9;
+  --text-primary: black;
+
   --text-secondary: #cbd5e1;
+  --text-third: #556272;
+
+  
   --glass: rgba(14, 165, 233, 0.1);
   --glass-border: rgba(14, 165, 233, 0.2);
   --success: #10b981;
@@ -181,7 +189,7 @@ h1 {
 
 .subtitle {
   margin: 0 0 24px 0;
-  color: var(--text-secondary);
+  color: var(--text-third);
   font-size: 16px;
   line-height: 1.6;
 }
@@ -195,7 +203,9 @@ h1 {
 }
 
 .feature {
-  background: rgba(15, 23, 42, 0.6);
+  //background: #21b9ff;//rgba(15, 23, 42, 0.6);
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+
   backdrop-filter: blur(10px);
   padding: 20px;
   border-radius: 12px;
@@ -230,20 +240,22 @@ h1 {
     margin: 0 0 8px 0;
     font-size: 16px;
     font-weight: 600;
-    color: var(--text-primary);
+    color:white;// var(--text-primary);
   }
 
   p {
     margin: 0;
     font-size: 14px;
-    color: var(--muted);
+    //color: var(--muted);
     line-height: 1.5;
   }
 }
 
 /* Waitlist Card */
 .waitlist-card {
-  background: var(--card);
+  background: var(--card-waitlist);
+ //background: white;
+
   backdrop-filter: blur(20px);
   padding: 28px;
   border-radius: var(--radius);
@@ -256,7 +268,7 @@ h1 {
     margin: 0 0 8px 0;
     font-size: 20px;
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--text-secondary);
   }
 
   .small-muted {
@@ -288,7 +300,9 @@ input, select {
   background: rgba(15, 23, 42, 0.8);
   backdrop-filter: blur(10px);
   border: 1px solid var(--glass-border);
-  color: var(--text-primary);
+//   color: var(--text-primary);
+  color: var(--text-secondary);
+
   font-size: 15px;
   outline: none;
   transition: all 0.3s ease;
@@ -468,7 +482,7 @@ input, select {
   ol {
     margin: 0;
     padding-left: 20px;
-    color: var(--text-secondary);
+    color: rgb(120, 127, 129);//var(--text-secondary);
     
     li {
       margin-bottom: 12px;
@@ -517,7 +531,7 @@ input, select {
 
   p {
     margin: 0 0 20px 0;
-    color: var(--text-secondary);
+    color: rgb(122, 132, 136);//var(--text-secondary);
     line-height: 1.6;
   }
 }
@@ -530,7 +544,7 @@ input, select {
     margin: 0 0 16px 0;
     font-size: 18px;
     font-weight: 600;
-    color: var(--text-primary);
+    color: white;//var(--text-primary);
   }
 
   ul {
