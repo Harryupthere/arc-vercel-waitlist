@@ -161,7 +161,7 @@ function Home4() {
                 </div>
               </div>
 
-              <button type="submit" className="btn">
+              <button type="submit" className="btn-submit">
                 Join the Waitlist & Claim My 20% Off
               </button>
 
@@ -171,7 +171,7 @@ function Home4() {
                 <span className="perk">🏆 Top Trader Support</span>
               </div>
 
-              <p className="muted-note">
+              <p >
                 By joining you agree to receive email updates. We never 
                 share your data. — <a href="#privacy">Privacy</a>
               </p>

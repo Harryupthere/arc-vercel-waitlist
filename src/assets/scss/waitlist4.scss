@@ -3,7 +3,8 @@
   --bg-secondary: #1e293b;
 //  --card: rgba(15, 23, 42, 0.8);
   --card: white;//rgba(15, 23, 42, 0.8);
-  --card-waitlist: rgba(15, 23, 42, 0.8);
+  //--card-waitlist: rgba(15, 23, 42, 0.8);
+  --card-waitlist: linear-gradient(90deg, var(--accent), var(--accent-2));;//rgba(15, 23, 42, 0.8);
 
   --card-hover: rgba(15, 23, 42, 0.9);
   --accent: #0ea5e9;
@@ -13,7 +14,7 @@
   //--text-primary: #f1f5f9;
   --text-primary: black;
 
-  --text-secondary: #cbd5e1;
+  --text-secondary: #f3f4f5;
   --text-third: #556272;
 
   
@@ -39,7 +40,10 @@ html, body {
 body {
   margin: 0;
   font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+  // background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+  background: linear-gradient(135deg,#0ea5e9 0%, #2a80a8 25%, #1dd5d8 50%, #1e838a 75%, #24fbfb 100%);
+  //background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+
   background-size: 400% 400%;
   animation: gradientShift 12s ease infinite;
   color: var(--text-primary);
@@ -272,7 +276,8 @@ h1 {
   }
 
   .small-muted {
-    color: var(--muted);
+   // color: var(--muted);
+    color: var(--text-secondary);
     font-size: 14px;
     margin-bottom: 20px;
     line-height: 1.5;
@@ -367,6 +372,49 @@ input, select {
   }
 }
 
+.btn-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 24px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  color: #0ea5e9;//linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);//white;
+  background: white;//linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(14, 165, 233, 0.4);
+    
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
 .perks {
   display: flex;
   flex-wrap: wrap;
@@ -375,8 +423,9 @@ input, select {
 }
 
 .perk {
-  background: rgba(14, 165, 233, 0.1);
-  color: var(--accent-2);
+  //background: rgba(14, 165, 233, 0.1);
+  // color: var(--accent-2);
+  color: white;
   padding: 4px 8px;
   border-radius: 6px;
   font-size: 12px;
@@ -435,7 +484,7 @@ input, select {
 }
 
 .unit {
-  background: rgba(15, 23, 42, 0.8);
+  background: #0ea5e9;//rgba(15, 23, 42, 0.8);
   backdrop-filter: blur(10px);
   padding: 16px;
   border-radius: 12px;
@@ -446,13 +495,13 @@ input, select {
 
   .number {
     font-weight: 800;
-    color: var(--accent);
+    color: white;//var(--accent);
     font-size: 24px;
     line-height: 1;
   }
 
   .unit-label {
-    color: var(--muted);
+    color: white;//var(--muted);
     font-size: 12px;
     font-weight: 500;
     margin-top: 4px;
@@ -560,7 +609,7 @@ input, select {
 
 footer {
   margin-top: 40px;
-  color: var(--muted);
+  //color: var(--muted);
   font-size: 13px;
   text-align: center;
   opacity: 0.8;
