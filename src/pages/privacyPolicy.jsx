@@ -8,8 +8,8 @@ const PrivacyPolicy = () => {
         <Link to="/waitlist" className="back-link">← Back to waitlist</Link>
         <h1>Privacy Policy</h1>
         <div className="dates">
-          <p><strong>Effective Date:</strong> [Insert Date]</p>
-          <p><strong>Last Updated:</strong> [Insert Date]</p>
+          <p><strong>Effective Date:</strong> 24-Aug-2025</p>
+          <p><strong>Last Updated:</strong> 24-Aug-2025</p>
         </div>
       </div>
       

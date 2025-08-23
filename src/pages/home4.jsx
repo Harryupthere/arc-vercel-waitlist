@@ -1,51 +1,241 @@
 import React, { useState, useEffect } from 'react';
+import Select from 'react-select';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import { allCountries } from 'country-telephone-data';
+import { Link } from 'react-router-dom';
 import './../assets/scss/waitlist4.scss';
+
+const apiUrl = 'https://myapi.myarcfunding.com/api/v1/';
+
+const customStyles = {
+  control: (base) => ({
+    ...base,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    borderRadius: '12px',
+    border: '2px solid transparent',
+    padding: '8px',
+    color: 'white',
+    fontSize: '16px',
+    fontWeight: '500',
+    transition: 'all 0.3s ease',
+    width: '100%',
+    minHeight: '58px',
+    '&:hover': {
+      borderColor: "#0ea5e9",//'#9c27b0',
+    },
+    // '&:focus': {
+    //   borderColor: '#9c27b0',
+    //   backgroundColor: 'rgba(138, 43, 226, 0.2)',
+    //   boxShadow: '0 0 20px rgba(156, 39, 176, 0.4)',
+    // },
+  }),
+  menu: (base) => ({
+    ...base,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    borderRadius: '12px',
+    padding: '8px',
+    width: '100%',
+  }),
+  option: (base, state) => ({
+    ...base,
+    backgroundColor: state.isFocused ? 'rgba(138, 43, 226, 0.2)' : 'transparent',
+    color: 'white',
+    borderRadius: '8px',
+    '&:hover': {
+      backgroundColor: "#0ea5e9",//'rgba(138, 43, 226, 0.3)',
+    },
+  }),
+  singleValue: (base) => ({
+    ...base,
+    color: 'white',
+  }),
+  placeholder: (base) => ({
+    ...base,
+    color: 'rgba(255, 255, 255, 0.6)',
+    position: 'absolute',
+    left: '12px',
+    top: '50%',
+    transform: 'translateY(-50%)',
+  }),
+  valueContainer: (base) => ({
+    ...base,
+    padding: '2px 8px',
+    color: 'white',
+  }),
+  input: (base) => ({
+    ...base,
+    margin: '0',
+    padding: '0',
+    color: 'white',
+  }),
+};
+
+const experienceOptions = [
+  { value: 'less_than_1', label: 'Lesser than 1 year' },
+  { value: '1_to_3', label: '1-3 years' },
+  { value: 'above_3', label: 'Above 3 years' },
+];
+
+function pad(n) {
+  return String(n).padStart(2, '0');
+}
 
 function Home4() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    experience: '',
-    country: ''
+    experience: null,
+    country: null,
+    countryCode: '',
   });
   const [countdown, setCountdown] = useState({
     days: 17,
     hours: 0,
-    minutes: 55
+    minutes: 55,
   });
+  const [countries, setCountries] = useState([]);
+  const [errors, setErrors] = useState({});
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCountdown(prev => {
-        if (prev.minutes > 0) {
-          return { ...prev, minutes: prev.minutes - 1 };
-        } else if (prev.hours > 0) {
-          return { ...prev, hours: prev.hours - 1, minutes: 59 };
-        } else if (prev.days > 0) {
-          return { ...prev, days: prev.days - 1, hours: 23, minutes: 59 };
-        }
-        return prev;
+    // Countries dropdown
+    const formatted = allCountries.map(c => ({
+      value: c.name,
+      label: c.name,
+      flag: `https://flagcdn.com/48x36/${c.iso2.toLowerCase()}.png`,
+    })).filter(c => c.value);
+    formatted.sort((a, b) => a.label.localeCompare(b.label));
+    setCountries(formatted);
+
+    // Fetch launch date and set countdown
+    let launchTimestamp = null;
+
+    const fetchLaunchDate = async () => {
+      try {
+        const timeRes = await axios.get(`${apiUrl}users/launch-date`);
+        launchTimestamp = timeRes.data.data; // should be a timestamp in ms
+        updateCountdown(launchTimestamp);
+      } catch (err) {
+        // fallback: keep default countdown
+      }
+    };
+
+    const updateCountdown = (launchTime) => {
+      const now = Date.now();
+      let diff = launchTime - now;
+      if (diff < 0) diff = 0;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      setCountdown({
+        days,
+        hours,
+        minutes,
       });
+    };
+
+    fetchLaunchDate();
+
+    // Countdown timer
+    const timer = setInterval(() => {
+      if (launchTimestamp) {
+        updateCountdown(launchTimestamp);
+      }
     }, 60000);
 
     return () => clearInterval(timer);
   }, []);
 
   const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+    setErrors(prev => ({ ...prev, [name]: '' }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
+  const handleSelectChange = (field, value) => {
+    setFormData(prev => {
+      const newState = { ...prev, [field]: value };
+      if (field === 'country') {
+        const countryCode = allCountries.find(c => c.name === value?.label)?.dialCode || '';
+        newState.countryCode = countryCode ? `+${countryCode}` : '';
+      }
+      return newState;
+    });
+    setErrors(prev => ({ ...prev, [field]: '' }));
   };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.name) newErrors.name = 'First Name is required';
+    if (!formData.email) newErrors.email = 'Email is required';
+    if (!formData.experience) newErrors.experience = 'Experience is required';
+    if (!formData.country) newErrors.country = 'Country is required';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+    setLoading(true);
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast.error('Please enter a valid email address.');
+      setLoading(false);
+      return;
+    }
+
+    // Prepare payload
+    const payload = {
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      experience: formData.experience?.label,
+      country: formData.country?.label,
+    };
+
+    try {
+      const response = await axios.post(`${apiUrl}users/waitlist`, payload);
+      if (response.data.success) {
+        toast.success("Successfully joined the waitlist!");
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          experience: null,
+          country: null,
+          countryCode: '',
+        });
+        setSuccess(true);
+        setLoading(false);
+      } else {
+        toast.error(response.data.message);
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error(error.response?.data?.message || "An error occurred");
+    }
+  };
+
+  const formatOptionLabel = ({ label, flag }) => (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+      <img src={flag} alt={label} style={{ width: '24px', height: '18px' }} />
+      <span>{label}</span>
+    </div>
+  );
 
   return (
     <div className="app">
+      <ToastContainer />
       <div className="container">
         {/* Hero Section */}
         <section className="hero">
@@ -91,91 +281,103 @@ function Home4() {
               selection for waitlist members.
             </p>
 
-            <form className="row" onSubmit={handleSubmit}>
-              <div>
-                <label>Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your first name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div>
-                <label>Email Address</label>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="you@domain.com"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div>
-                <label>Phone number (optional)</label>
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="+60 12 345 6789"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                />
-              </div>
-
-              <div className="grid-2">
+            {!success ? (
+              <form className="row" onSubmit={handleSubmit} noValidate>
                 <div>
-                  <label>Trading Experience</label>
-                  <select
-                    name="experience"
-                    value={formData.experience}
+                  <label>Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Your first name"
+                    value={formData.name}
                     onChange={handleInputChange}
                     required
-                  >
-                    <option value="">Experience</option>
-                    <option value="beginner">Beginner</option>
-                    <option value="intermediate">Intermediate</option>
-                    <option value="advanced">Advanced</option>
-                    <option value="professional">Professional</option>
-                  </select>
+                  />
+                  {errors.name && <div className="error">{errors.name}</div>}
                 </div>
+
                 <div>
-                  <label>Country</label>
-                  <select
-                    name="country"
-                    value={formData.country}
+                  <label>Email Address</label>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="you@domain.com"
+                    value={formData.email}
                     onChange={handleInputChange}
                     required
-                  >
-                    <option value="">Country</option>
-                    <option value="us">United States</option>
-                    <option value="uk">United Kingdom</option>
-                    <option value="ca">Canada</option>
-                    <option value="au">Australia</option>
-                    <option value="other">Other</option>
-                  </select>
+                  />
+                  {errors.email && <div className="error">{errors.email}</div>}
+                </div>
+
+                <div>
+                  <label>Phone number (optional)</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="+60 12 345 6789"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                  />
+                </div>
+
+                <div className="grid-2">
+                  <div>
+                    <label>Trading Experience</label>
+                    <Select
+                      name="experience"
+                      options={experienceOptions}
+                      styles={customStyles}
+                      placeholder="Experience"
+                      value={formData.experience}
+                      onChange={selected => handleSelectChange('experience', selected)}
+                      className="react-select-container"
+                      classNamePrefix="react-select"
+                    />
+                    {errors.experience && <div className="error">{errors.experience}</div>}
+                  </div>
+                  <div>
+                    <label>Country</label>
+                    <Select
+                      name="country"
+                      options={countries}
+                      styles={customStyles}
+                      placeholder="Country"
+                      value={formData.country}
+                      onChange={selected => handleSelectChange('country', selected)}
+                      formatOptionLabel={formatOptionLabel}
+                      className="react-select-container"
+                      classNamePrefix="react-select"
+                    />
+                    {errors.country && <div className="error">{errors.country}</div>}
+                  </div>
+                </div>
+
+                <button type="submit" className="btn-submit" disabled={success || loading}>
+                  {loading ? 'Loading...' : (success ? 'Added — Check email' : 'Join the Waitlist & Claim My 20% Off')}
+                </button>
+
+                <div className="perks">
+                  <span className="perk">🔒 Instant Funding Available</span>
+                  <span className="perk">💰 Up to $300K Accounts</span>
+                  <span className="perk">🏆 Top Trader Support</span>
+                </div>
+
+                <p>
+                  By joining you agree to receive email updates. We never 
+                  share your data. — <Link to="/privacy-policy" style={{  textDecoration: 'none' }}>Privacy</Link>
+                </p>
+              </form>
+            ) : (
+              <div className="success-message">
+                Welcome to Arc Funding
+                please check your email inbox.
+                <div className="success-message-link">
+                  <a href="https://mail.google.com/" target="_blank" rel="noopener noreferrer">
+                    👉 Don’t forget to check your spam or promotions folder just in case!
+                  </a>
                 </div>
               </div>
-
-              <button type="submit" className="btn-submit">
-                Join the Waitlist & Claim My 20% Off
-              </button>
-
-              <div className="perks">
-                <span className="perk">🔒 Instant Funding Available</span>
-                <span className="perk">💰 Up to $300K Accounts</span>
-                <span className="perk">🏆 Top Trader Support</span>
-              </div>
-
-              <p >
-                By joining you agree to receive email updates. We never 
-                share your data. — <a href="#privacy">Privacy</a>
-              </p>
-            </form>
+            )}
           </div>
         </section>
 
@@ -191,15 +393,15 @@ function Home4() {
               <div className="unit-label">Days</div>
             </div>
             <div className="unit">
-              <div className="number">{countdown.hours.toString().padStart(2, '0')}</div>
+              <div className="number">{pad(countdown.hours)}</div>
               <div className="unit-label">Hours</div>
             </div>
             <div className="unit">
-              <div className="number">{countdown.minutes.toString().padStart(2, '0')}</div>
+              <div className="number">{pad(countdown.minutes)}</div>
               <div className="unit-label">Minutes</div>
             </div>
           </div>
-          <small>Offer Ends in {countdown.days} Days {countdown.hours} Hours {countdown.minutes} Minutes</small>
+          <small>Offer Ends in {countdown.days} Days {pad(countdown.hours)} Hours {pad(countdown.minutes)} Minutes</small>
         </section>
 
         {/* How It Works */}
@@ -222,7 +424,9 @@ function Home4() {
               When ARC Funding launches, waitlist traders will get first choice of accounts, 
               instant funding, and the only 20% discount we'll ever offer.
             </p>
-            <button className="btn">Learn More</button>
+            <Link to="/terms-of-use" className="btn" type="button">
+                                    Learn More
+                                </Link>
           </div>
         </section>
 
