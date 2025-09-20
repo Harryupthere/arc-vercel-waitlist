@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ARC Funding//EN
+BEGIN:VEVENT
+UID:arc-funding-launch-2025@myarcfunding.com
+DTSTAMP:20250928T120000Z
+DTSTART:20251001T120000Z
+DTEND:20251001T123000Z
+SUMMARY:ARC Funding Launch - Your Discount Code Arrives!
+DESCRIPTION:Check your email for your ARC Funding discount code. Valid for 48 hours only!
+LOCATION:Online
+END:VEVENT
+END:VCALENDAR

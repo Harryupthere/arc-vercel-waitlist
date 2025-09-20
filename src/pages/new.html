@@ -1,477 +1,96 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ARC Funding — Get Funded. Keep Your Profits.</title>
-  <meta name="description" content="Your journey to $300K funded trading starts here. Join the waitlist and claim 20% early access discount." />
-
-  <!-- Google Font (optional) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --bg: #0a0a0a;
-      --card: rgba(0,0,0,0.4);
-      --accent: #9c27b0;
-      --accent-2: #2dd4bf;
-      --muted: #9aa7bf;
-      --glass: rgba(138,43,226,0.2);
-      --max-width:1100px;
-      --radius:14px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(135deg, #0a0a0a 0%, #1a0033 25%, #2d1b4e 50%, #4a148c 75%, #6a1b9a 100%);
-      background-size: 400% 400%;
-      animation: gradientShift 8s ease infinite;
-      color:#e6eef8;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.4;
-      padding:32px 20px;
-      display:flex;
-      justify-content:center;
-    }
-    @keyframes gradientShift {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-
-    .container{
-      width:100%;
-      max-width:var(--max-width);
-    }
-
-    /* Header / hero card */
-    .hero{
-      display:grid;
-      grid-template-columns: 1fr 420px;
-      gap:28px;
-      align-items:center;
-      background:var(--card);
-      border-radius:var(--radius);
-      padding:36px;
-      box-shadow: 0 12px 30px rgba(3,8,23,0.6);
-      border:1px solid rgba(138,43,226,0.3);
-    }
-
-    @media (max-width:960px){
-      .hero{grid-template-columns:1fr; padding:28px}
-    }
-
-    .kicker{
-      display:inline-flex;
-      gap:10px;
-      align-items:center;
-      background:linear-gradient(90deg, rgba(156,39,176,0.12), rgba(45,212,191,0.06));
-      color:var(--accent);
-      padding:6px 10px;
-      border-radius:999px;
-      font-weight:600;
-      font-size:13px;
-      width:max-content;
-      margin-bottom:12px;
-    }
-
-    h1{
-      margin:0 0 12px 0;
-      font-size:34px;
-      line-height:1.02;
-      letter-spacing:-0.01em;
-    }
-    p.lead{
-      margin:0 0 18px 0;
-      color:var(--muted);
-      font-size:16px;
-    }
-
-    /* form */
-    .waitlist-card{
-      background:var(--card);
-      padding:22px;
-      border-radius:12px;
-      border:1px solid rgba(138,43,226,0.3);
-    }
-    form.row{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    label{
-      font-size:13px;
-      color:var(--muted);
-      display:block;
-    }
-    input, select{
-      width:100%;
-      padding:12px 14px;
-      border-radius:10px;
-      background:var(--glass);
-      border:2px solid rgba(138,43,226,0.3);
-      color:inherit;
-      font-size:15px;
-      outline:none;
-      background-color: rgba(0,0,0,0.3);
-    }
-    input::placeholder{color:rgba(255,255,255,0.35)}
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding:13px 18px;
-      border-radius:10px;
-      border:0;
-      font-weight:700;
-      cursor:pointer;
-      color:#fff;
-      background:linear-gradient(90deg,#9c27b0, #5b6cff);
-      box-shadow: 0 8px 30px rgba(156,39,176,0.18), inset 0 -3px 8px rgba(0,0,0,0.15);
-      font-size:15px;
-      transition: all 0.3s ease;
-    }
-    .btn.secondary{
-      background:transparent;
-      color:var(--muted);
-      border:1px solid rgba(138,43,226,0.3);
-      font-weight:600;
-    }
-    .muted-note{font-size:13px;color:var(--muted);margin-top:8px}
-
-    .features{
-      margin-top:18px;
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:12px;
-    }
-    @media (max-width:720px){ .features{grid-template-columns:1fr} }
-    .feature{
-      background:rgba(0,0,0,0.3);
-      padding:14px;
-      border-radius:10px;
-      border:1px solid rgba(138,43,226,0.2);
-    }
-    .feature h4{margin:0 0 8px 0;font-size:15px}
-    .feature p{margin:0;color:var(--muted);font-size:14px}
-
-    /* FOMO section */
-    .fomo{
-      margin-top:20px;
-      background:linear-gradient(90deg, rgba(156,39,176,0.02), rgba(45,212,191,0.01));
-      border-radius:12px;
-      padding:16px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      border:1px solid rgba(138,43,226,0.3);
-    }
-    .countdown{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      font-weight:700;
-      color:#fff;
-      font-size:16px;
-    }
-    .countdown .unit{
-      background:linear-gradient(180deg, rgba(156,39,176,0.03), rgba(45,212,191,0.01));
-      padding:10px 12px;
-      border-radius:8px;
-      min-width:70px;
-      text-align:center;
-      border:1px solid rgba(138,43,226,0.3);
-    }
-    .fomo small{color:var(--muted)}
-
-    /* How it works + CTA */
-    .how{
-      margin-top:28px;
-      display:flex;
-      gap:18px;
-      align-items:flex-start;
-      flex-wrap:wrap;
-    }
-    .how-steps{
-      flex:1;
-      min-width:260px;
-      background:rgba(0,0,0,0.3);
-      padding:16px;
-      border-radius:12px;
-      border:1px solid rgba(138,43,226,0.2);
-    }
-    .how-steps ol{margin:0;padding-left:18px;color:var(--muted)}
-    .final-cta{
-      min-width:300px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      align-items:flex-start;
-    }
-    .final-cta .card{
-      background:linear-gradient(180deg, rgba(156,39,176,0.06), rgba(45,212,191,0.02));
-      padding:16px;
-      border-radius:12px;
-      width:100%;
-      border:1px solid rgba(138,43,226,0.3);
-    }
-    footer{
-      margin-top:28px;
-      color:var(--muted);
-      font-size:13px;
-      text-align:center;
-      opacity:0.9;
-    }
-
-    /* small */
-    .small-muted{font-size:13px;color:var(--muted)}
-    .grid-2{display:grid;grid-template-columns:1fr 1fr; gap:8px}
-    @media (max-width:720px){ .grid-2{grid-template-columns:1fr} }
-
-    /* success toast / modal */
-    .toast{
-      position:fixed;
-      right:20px;
-      bottom:20px;
-      background:linear-gradient(90deg,#0b1220,#081028);
-      color:#dff7ef;
-      padding:12px 16px;
-      border-radius:10px;
-      box-shadow:0 8px 30px rgba(2,8,20,0.6);
-      border:1px solid rgba(138,43,226,0.3);
-      display:none;
-      z-index:9999;
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARC Funding — You're In!</title>
+<style>
+  :root {
+    --bg:#0b0f1a; --card:#0f1629; --muted:#93a0b8; --text:#e7ecf7;
+    --primary:#23c55e; --accent:#38bdf8; --brand:#7C3AED;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:var(--bg); color:var(--text); }
+  .wrap { max-width:960px; margin:0 auto; padding:28px 16px 64px; }
+  .hero { background:linear-gradient(135deg, #0f172a, #0b1222); border:1px solid #1e293b; border-radius:16px; padding:28px; box-shadow:0 10px 30px rgba(0,0,0,.35); }
+  h1 { margin:0 0 8px; font-size:28px; line-height:1.2; }
+  p.lead { color:var(--muted); margin:0 0 16px; font-size:16px; }
+  .cta { display:inline-block; background:var(--primary); color:#07110a; padding:14px 20px; border-radius:10px; font-weight:700; text-decoration:none; }
+  .grid { display:grid; gap:16px; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); margin-top:18px; }
+  .card { background:var(--card); border:1px solid #1e293b; border-radius:14px; padding:16px; }
+  .small { font-size:14px; color:var(--muted); }
+  .steps li { margin:8px 0; }
+  .btns a { display:inline-block; margin:8px 8px 0 0; padding:10px 14px; border-radius:8px; background:#1f2937; color:#c9d3e5; text-decoration:none; border:1px solid #303c53; }
+  .highlight { background:rgba(124,58,237,.15); border:1px solid rgba(124,58,237,.35); padding:12px; border-radius:10px; }
+  .badge { display:inline-block; background:#111827; border:1px solid #303c53; color:#9aa8ff; padding:6px 10px; border-radius:999px; font-size:12px; }
+  .footer { margin-top:28px; color:var(--muted); font-size:12px; }
+</style>
 </head>
 <body>
-  <div class="container" role="main">
-    <section class="hero" aria-label="ARC Funding hero">
-      <div>
-        <span class="kicker" aria-hidden="true">Early Access • Waitlist</span>
-        <h1>Claim Your <span style="background:linear-gradient(90deg,var(--accent),var(--accent-2)); -webkit-background-clip:text; color:transparent;">20% Early Access Discount</span><br><small style="font-size:14px; font-weight:600; color:var(--muted)">Limited to Waitlist Traders Only!</small></h1>
-        <p class="lead">Be among the first to access ARC Funding accounts when we launch. Get funded instantly, scale fast, and keep up to <strong>90% of your profits</strong>.</p>
-
-        <div class="features" aria-hidden="false">
-          <div class="feature">
-            <h4>Instant Funding Options</h4>
-            <p>No long evaluation phases — start trading and earning immediately.</p>
-          </div>
-          <div class="feature">
-            <h4>High Payouts</h4>
-            <p>Keep up to 90% of your profits — trade your style, keep your edge.</p>
-          </div>
-          <div class="feature">
-            <h4>Scale Up to $300K</h4>
-            <p>Seamless capital scaling for top-performing traders.</p>
-          </div>
-          <div class="feature">
-            <h4>Trader-Friendly Rules</h4>
-            <p>Transparent, minimal restrictions designed for real traders.</p>
-          </div>
-        </div>
-
-        <div class="fomo" style="margin-top:16px">
-          <div>
-            <div style="font-weight:700">Spots Are Limited</div>
-            <small>Our early access waitlist is capped. Once it’s full, the 20% discount is gone forever.</small>
-          </div>
-
-          <div style="display:flex;flex-direction:column;align-items:flex-end;">
-            <div class="countdown" aria-live="polite" aria-atomic="true">
-              <div class="unit" id="days">--<div style="font-weight:400;font-size:12px;color:var(--muted)">Days</div></div>
-              <div class="unit" id="hours">--<div style="font-weight:400;font-size:12px;color:var(--muted)">Hours</div></div>
-              <div class="unit" id="mins">--<div style="font-weight:400;font-size:12px;color:var(--muted)">Minutes</div></div>
-            </div>
-            <small style="margin-top:6px;color:var(--muted)">Offer Ends in <strong id="relative-offer">61d 15h 12m</strong></small>
-          </div>
-        </div>
-
+  <div class="wrap">
+    <div class="hero">
+      <span class="badge">Waitlist: Success</span>
+      <h1>You're In — Your 20% Early Access Is Locked ✅</h1>
+      <p class="lead">We’ve sent a confirmation email from <strong>ARC Funding &lt;info@myarcfunding.com&gt;</strong>. Please follow the steps below to make sure you receive your discount code on <strong>Oct 01</strong>.</p>
+      <div class="btns">
+        <a class="cta" href="https://mail.google.com/" target="_blank">Open Gmail</a>
+        <a href="https://outlook.live.com/mail/" target="_blank">Open Outlook</a>
+        <a href="https://mail.yahoo.com/" target="_blank">Open Yahoo</a>
       </div>
-
-      <!-- Waitlist form -->
-      <aside class="waitlist-card" aria-label="Join waitlist">
-        <h3 style="margin:0 0 8px 0">Join the Waitlist & Claim 20% Off</h3>
-        <p class="small-muted" style="margin:0 0 12px 0">Be first in line — instant funding options and priority account selection for waitlist members.</p>
-
-        <form id="waitlistForm" class="row" novalidate>
-          <div>
-            <label for="firstName">First Name</label>
-            <input id="firstName" name="firstName" type="text" placeholder="Your first name" required aria-required="true" />
-          </div>
-
-          <div>
-            <label for="email">Email Address</label>
-            <input id="email" name="email" type="email" placeholder="you@domain.com" required aria-required="true" />
-          </div>
-
-          <div>
-            <label for="phone">Phone number <small style="color:var(--muted)">(optional)</small></label>
-            <input id="phone" name="phone" type="tel" placeholder="+60 12 345 6789" />
-          </div>
-
-          <div class="grid-2">
-            <div>
-              <label for="experience">Trading Experience</label>
-              <select id="experience" name="experience" required aria-required="true">
-                <option value="">Select experience</option>
-                <option>Beginner</option>
-                <option>Intermediate</option>
-                <option>Advanced</option>
-                <option>Professional / Prop Trader</option>
-              </select>
-            </div>
-
-            <div>
-              <label for="country">Country</label>
-              <select id="country" name="country" required aria-required="true">
-                <option value="">Select your country</option>
-                <option>Malaysia</option>
-                <option>United States</option>
-                <option>United Kingdom</option>
-                <option>Singapore</option>
-                <option>Australia</option>
-                <option>Other</option>
-              </select>
-            </div>
-          </div>
-
-          <div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap;">
-            <button id="joinBtn" class="btn" type="submit">Join the Waitlist & Claim My 20% Off</button>
-            <button id="altBtn" type="button" class="btn secondary" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">Learn More</button>
-          </div>
-
-          <div class="muted-note">💰 Instant Funding Available | 📈 Up to $300K Accounts | 🏆 Top Trader Support</div>
-          <div class="small-muted" style="margin-top:8px">By joining you agree to receive email updates. We never share your data. — <a href="#" style="color:var(--accent);text-decoration:none">Privacy</a></div>
-        </form>
-      </aside>
-    </section>
-
-    <section class="how" aria-label="How ARC Funding works">
-      <div class="how-steps" aria-hidden="false">
-        <h3 style="margin-top:0">How It Works</h3>
-        <ol>
-          <li><strong>Join the Waitlist Today</strong> — It's free and takes ~10 seconds.</li>
-          <li><strong>Receive Exclusive Updates</strong> — Priority access, launch offers, account selection.</li>
-          <li><strong>Get Your Account at 20% Off</strong> — Trade instantly when we go live and keep up to 90% of profits.</li>
-        </ol>
-      </div>
-
-      <div class="final-cta" aria-hidden="false">
+      <div class="grid">
         <div class="card">
-          <h4 style="margin:0 0 8px 0">Don't Miss Out on Your Advantage</h4>
-          <p class="small-muted" style="margin:0 0 12px 0">When ARC Funding launches, waitlist traders will get first choice of accounts, instant funding, and the only 20% discount we’ll ever offer.</p>
-          <button class="btn" onclick="document.getElementById('firstName').focus()">Yes, I Want Early Access</button>
-        </div>
-
-        <div style="font-size:13px;color:var(--muted)">
-          <strong>Top features:</strong>
-          <ul style="margin:8px 0 0 18px;padding:0;color:var(--muted)">
-            <li>Fast account activation</li>
-            <li>Competitive scaling rules</li>
-            <li>Dedicated trader support</li>
+          <h3>1) Find & Star Our Email</h3>
+          <ul class="steps">
+            <li>Search inbox for: <code>info@myarcfunding.com</code></li>
+            <li><strong>Star</strong> the email and drag it to Primary (Gmail).</li>
+            <li>Not there? Check <em>Spam</em> or <em>Promotions</em> and click <strong>“Not spam”</strong>.</li>
           </ul>
         </div>
+        <div class="card">
+          <h3>2) Add Us to Contacts</h3>
+          <p class="small">This tells inboxes you want our emails.</p>
+          <div class="btns">
+            <a href="./arcfunding.vcf">Add ARC Funding to Contacts (.vcf)</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>3) Add Launch to Calendar</h3>
+          <p class="small">We’ll send your discount code on launch day. It’s valid for 48 hours only.</p>
+          <div class="btns">
+            <a href="./arcfunding_launch.ics">Add Launch Reminder (.ics)</a>
+          </div>
+        </div>
       </div>
-    </section>
+      <div class="highlight" style="margin-top:18px;">
+        <strong>Heads up:</strong> Your discount code will be active for <strong>48 hours</strong> from launch — after that it expires.
+      </div>
+    </div>
 
-    <footer>
-      ©️ <span id="year"></span> ARC Funding. All rights reserved. | <span class="small-muted">Offer limited to waitlist traders only. Terms apply.</span>
-    </footer>
+    <div class="grid" style="margin-top:18px;">
+      <div class="card">
+        <h3>Want Early Bonuses?</h3>
+        <p class="small">Invite 3 trader friends to the waitlist and get an extra <strong>$50</strong> off your first account.</p>
+        <div class="btns">
+          <a href="#" onclick="navigator.clipboard.writeText(window.location.origin + '/?ref=YOURCODE');return false;">Copy My Referral Link</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Join Our Telegram</h3>
+        <p class="small">Live updates, Q&A, and pre‑launch sneak peeks.</p>
+        <div class="btns">
+          <a href="https://t.me/yourchannel" target="_blank">Open Telegram Channel</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Quick Survey (15s)</h3>
+        <p class="small">What account size are you aiming for? Help us tailor your offer.</p>
+        <div class="btns">
+          <a href="https://forms.gle/yourform" target="_blank">Answer 3 Questions</a>
+        </div>
+      </div>
+    </div>
+
+    <p class="footer">Need help? Email <a href="mailto:support@myarcfunding.com">support@myarcfunding.com</a>. © 2025 ARC Funding</p>
   </div>
-
-  <div class="toast" id="toast" role="status" aria-live="polite">You're on the waitlist — check your email for confirmation.</div>
-
-  <script>
-    // --------- Countdown initialization ----------
-    // The requested initial duration is: 61 days 15 hours 12 minutes
-    // Convert that to milliseconds precisely:
-    // 61 days = 61 * 86400 sec = 5,270,400 sec
-    // + 15 hours = 15 * 3600 = 54,000 sec => 5,324,400 sec
-    // + 12 minutes = 12 * 60 = 720 sec => 5,325,120 sec
-    // => 5,325,120,000 milliseconds total
-    (function(){
-      const DURATION_MS = 5325120000; // 5,325,120,000
-      const end = Date.now() + DURATION_MS;
-      const daysEl = document.getElementById('days');
-      const hoursEl = document.getElementById('hours');
-      const minsEl = document.getElementById('mins');
-      const relative = document.getElementById('relative-offer');
-
-      function pad(n){ return String(n).padStart(2,'0') }
-
-      function update(){
-        const now = Date.now();
-        let diff = end - now;
-        if(diff <= 0){
-          daysEl.textContent = '00';
-          hoursEl.textContent = '00';
-          minsEl.textContent = '00';
-          relative.textContent = 'Offer ended';
-          clearInterval(timer);
-          return;
-        }
-        const sec = Math.floor(diff / 1000);
-        const days = Math.floor(sec / 86400);
-        const hours = Math.floor((sec % 86400) / 3600);
-        const mins = Math.floor((sec % 3600) / 60);
-
-        daysEl.innerHTML = pad(days) + '<div style="font-weight:400;font-size:12px;color:var(--muted)">Days</div>';
-        hoursEl.innerHTML = pad(hours) + '<div style="font-weight:400;font-size:12px;color:var(--muted)">Hours</div>';
-        minsEl.innerHTML = pad(mins) + '<div style="font-weight:400;font-size:12px;color:var(--muted)">Minutes</div>';
-        relative.textContent = `${days} Days ${hours} Hours ${mins} Minutes`;
-      }
-      update();
-      const timer = setInterval(update, 60 * 1000); // update every minute
-    })();
-
-    // --------- Simple form handling (demo) ----------
-    (function(){
-      const form = document.getElementById('waitlistForm');
-      const toast = document.getElementById('toast');
-      const year = document.getElementById('year');
-      year.textContent = new Date().getFullYear();
-
-      function showToast(message){
-        toast.textContent = message;
-        toast.style.display = 'block';
-        setTimeout(()=>{ toast.style.display = 'none' }, 4500);
-      }
-
-      form.addEventListener('submit', function(e){
-        e.preventDefault();
-        // basic validation
-        const first = form.firstName.value.trim();
-        const email = form.email.value.trim();
-        const experience = form.experience.value;
-        const country = form.country.value;
-
-        if(!first || !email || !experience || !country){
-          showToast('Please complete required fields.');
-          return;
-        }
-
-        // Demo success behaviour:
-        showToast('Thanks! You\'re on the waitlist — check your email for confirmation.');
-
-        // Clear button and add a success state
-        const joinBtn = document.getElementById('joinBtn');
-        joinBtn.disabled = true;
-        joinBtn.textContent = 'Added — Check email';
-        joinBtn.style.opacity = '0.9';
-        // Optionally store to localStorage to prevent repeat on same device:
-        localStorage.setItem('arc_waitlist_added', JSON.stringify({first, email, date:Date.now()}));
-
-        // TODO: Replace this block with your real API call, e.g.:
-        // fetch('/api/waitlist', {method:'POST', body:JSON.stringify({first,email,phone,experience,country})})
-        //   .then(r=>r.json()).then(...).catch(...);
-      });
-    })();
-  </script>
 </body>
 </html>

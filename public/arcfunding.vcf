@@ -1,0 +1,8 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:ARC Funding
+ORG:ARC Funding
+EMAIL;TYPE=INTERNET:info@myarcfunding.com
+TEL;TYPE=WORK:+1234567890
+URL:https://myarcfunding.com
+END:VCARD

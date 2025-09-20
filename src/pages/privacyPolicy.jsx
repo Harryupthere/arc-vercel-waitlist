@@ -5,7 +5,7 @@ const PrivacyPolicy = () => {
   return (
     <div className="privacy-container">
       <div className="header">
-        <Link to="/waitlist" className="back-link">← Back to waitlist</Link>
+        <Link to="/" className="back-link">← Back to waitlist</Link>
         <h1>Privacy Policy</h1>
         <div className="dates">
           <p><strong>Effective Date:</strong> 24-Aug-2025</p>

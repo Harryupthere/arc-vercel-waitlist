@@ -7,6 +7,8 @@
 
 import PrivacyPolicy from '../pages/privacyPolicy';
 import TermsAndConditions from '../pages/TermsAndConditions';
+import Waitlist4Success from '../pages/waitlist4success';
+import Tnc from '../pages/tnc'
 // const RoutesMain = () => {
 //   return (
 //     <Router>
@@ -24,14 +26,17 @@ const RoutesMain = () => {
     <Router>
       <Routes>
         {/* Redirect root "/" to "/waitlist" */}
-        <Route path="/" element={<Navigate to="/waitlist" />} />
+        {/* <Route path="/" element={<Navigate to="/" />} /> */}
 
         {/* Waitlist page at /waitlist */}
         {/* <Route path="/waitlist" element={<Home3 />} /> */}
-        <Route path="/waitlist" element={<Home4 />} />
+        <Route path="/" element={<Home4 />} />
+        <Route path="/success" element={<Waitlist4Success />} />
 
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-use" element={<TermsAndConditions />} />
+        <Route path="/terms-and-condition" element={<Tnc />} />
+
 
 
 

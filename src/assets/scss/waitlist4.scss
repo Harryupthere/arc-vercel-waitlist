@@ -4,7 +4,7 @@
 //  --card: rgba(15, 23, 42, 0.8);
   --card: white;//rgba(15, 23, 42, 0.8);
   //--card-waitlist: rgba(15, 23, 42, 0.8);
-  --card-waitlist: linear-gradient(90deg, var(--accent), var(--accent-2));;//rgba(15, 23, 42, 0.8);
+  --card-waitlist: #3fa5c3;//linear-gradient(90deg, var(--accent), var(--accent-2));;//rgba(15, 23, 42, 0.8);
 
   --card-hover: rgba(15, 23, 42, 0.9);
   --accent: #0ea5e9;
@@ -29,6 +29,9 @@
   --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
 }
 
+
+
+
 * {
   box-sizing: border-box;
 }
@@ -42,6 +45,8 @@ body {
   //background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
 
   background-size: 400% 400%;
+   -webkit-background-clip: text;
+  -webkit-animation: gradientShift 12s ease infinite;
   animation: gradientShift 12s ease infinite;
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
@@ -58,13 +63,18 @@ body {
     right: 0;
     bottom: 0;
     background: 
-      radial-gradient(circle at 20% 50%, rgba(14, 165, 233, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 40% 80%, rgba(251, 191, 36, 0.03) 0%, transparent 50%);
+        linear-gradient(135deg,#0ea5e9 0%, #2a80a8 25%, #1dd5d8 50%, #1e838a 75%, #24fbfb 100%);
+
     pointer-events: none;
     z-index: -1;
   }
 }
+
+@-webkit-keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
 
 @keyframes gradientShift {
   0%, 100% { background-position: 0% 50%; }
@@ -140,7 +150,11 @@ body {
   justify-content: center;
   position: relative;
   z-index: 1;
+
 }
+
+
+
 
 .kicker {
   display: inline-flex;
@@ -164,6 +178,16 @@ body {
   }
 }
 
+.logo-badge {
+ padding: 0px 0px 0px 16px;
+
+  img {
+    height: 180px;
+    width: auto;
+    
+  }
+}
+
 h1 {
   margin: 0 0 16px 0;
   font-size: 40px;
@@ -171,6 +195,16 @@ h1 {
   letter-spacing: -0.02em;
   font-weight: 800;
   color: var(--text-primary);
+}
+
+h2 {
+  margin: 0 0 16px 0;
+  font-size: 30px;
+   line-height: 1.1;
+   letter-spacing: -0.02em;
+  font-weight: 800;
+  color: var(--text-primary);
+  white-space: nowrap; // Add this line
 }
 
 .gradient-text {
@@ -186,6 +220,14 @@ h1 {
   color: var(--accent);
   font-size: 18px;
   font-weight: 600;
+}
+.leadsuccess {
+  margin: 0 0 12px 0;
+  color: var(--accent);
+  font-size: 18px;
+  font-weight: 600;
+  white-space: nowrap; // Add this line
+
 }
 
 .subtitle {
@@ -305,11 +347,11 @@ input, select {
   width: 100%;
   padding: 14px 16px;
   border-radius: 12px;
-  background: rgba(15, 23, 42, 0.8);
+  background: white;//rgba(15, 23, 42, 0.8);
   backdrop-filter: blur(10px);
   border: 1px solid var(--glass-border);
 //   color: var(--text-primary);
-  color: white;//black;//var(--text-secondary);
+  color: black;//var(--text-secondary);
 
   font-size: 15px;
   outline: none;
@@ -322,7 +364,7 @@ input, select {
   &:focus {
     border-color: var(--accent);
     box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
-    background: rgba(15, 23, 42, 0.9);
+   // background: rgba(15, 23, 42, 0.9);
   }
 }
 
@@ -386,9 +428,11 @@ input, select {
   font-weight: 700;
   font-size: 15px;
   cursor: pointer;
-  color: #0ea5e9;//linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);//white;
-  background: white;//linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
-  box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3);
+  color: white;//#0ea5e9;//linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);//white;
+  //  background: white;//linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  background: linear-gradient(135deg, #1f922c 0%, #90ee74 100%); /* silver to white */
+
+   box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -596,16 +640,18 @@ input, select {
     margin: 0 0 16px 0;
     font-size: 18px;
     font-weight: 600;
-    color: white;//var(--text-primary);
+    color:white;// white;//var(--text-primary);
   }
 
   ul {
     margin: 0;
     padding-left: 20px;
+    color:white;// white;//var(--text-primary);
     
     li {
       margin-bottom: 8px;
       line-height: 1.5;
+      color:white;// white;//var(--text-primary);
     }
   }
 }
@@ -618,6 +664,7 @@ footer {
   opacity: 0.8;
   padding: 20px 0;
   border-top: 1px solid rgba(148, 163, 184, 0.1);
+  color:white;// black;// white;//var(--text-primary);
 }
 
 /* Responsive Design */

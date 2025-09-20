@@ -359,139 +359,139 @@ const TermsAndConditions = () => {
         </div>
       )
     },
-    {
-      id: 'disclaimer',
-      title: '9 Disclaimer',
-      content: (
-        <div>
-          <h2>9. Disclaimer</h2>
-          <ol>
-            <li>General disclaimer of liability and limitations of warranties</li>
+    // {
+    //   id: 'disclaimer',
+    //   title: '9 Disclaimer',
+    //   content: (
+    //     <div>
+    //       <h2>9. Disclaimer</h2>
+    //       <ol>
+    //         <li>General disclaimer of liability and limitations of warranties</li>
 
-          </ol>
-        </div>
-      )
-    },
-    {
-      id: 'violation-terms',
-      title: '10 Violation of Terms',
-      content: (
-        <div>
-          <h2>10. Violation of Terms</h2>
-          <ol>
-            <li>Consequences and actions taken when terms of service are violated.</li>
-          </ol>
-        </div>
-      )
-    },
-    {
-      id: 'communication',
-      title: '11 Communication',
-      content: (
-        <div>
-          <h2>11. Communication</h2>
-          <ol>
-            <li>How communication between parties is handled, including accepted methods and timelines.</li>
-          </ol>
-        </div>
-      )
-    },
-    {
-      id: 'withdraw-contract',
-      title: '11 Right to Withdraw from a Contract',
-      content: (
-        <div>
-          <h2>11. Right to Withdraw from a Contract</h2>
-          <ol>
-            <li>Explains the client's rights and procedures for withdrawing from a contract.</li>
-          </ol>
-        </div>
-      )
-    },
-    {
-      id: 'defective-services',
-      title: '12 Defective Services',
-      content: (
-        <div>
-          <h2>12. Defective Services</h2>
-          <ol>
-            <li>Outlines procedures for handling service deficiencies or problems.</li>
-          </ol>
-        </div>
-      )
-    },
-    {
-      id: 'changes-gtc',
-      title: '13 Changes to the General Terms & Conditions (GTC)',
-      content: (
-        <div>
-          <h2>13. Changes to the General Terms & Conditions (GTC)</h2>
-          <ol>
-            <li>Details how changes to the terms and conditions will be communicated and enforced.</li>
-          </ol>
-        </div>
-      )
-    },
-    {
-      id: 'dispute-settlement',
-      title: '14 Out-of-Court Consumer Dispute Settlement',
-      content: (
-        <div>
-          <h2>14. Out-of-Court Consumer Dispute Settlement</h2>
-          <ol>
-            <li>Information about resolving disputes without litigation.</li>
-          </ol>
-        </div>
-      )
-    },
-    {
-      id: 'law-jurisdiction',
-      title: '15 Choice of Law and Jurisdiction',
-      content: (
-        <div>
-          <h2>15. Choice of Law and Jurisdiction</h2>
-          <ol>
-            <li>Specifies which laws apply and which courts have jurisdiction over disputes.</li>
-          </ol>
-        </div>
-      )
-    },
-    {
-      id: 'contract-duration',
-      title: '16 Duration and Termination of Contract',
-      content: (
-        <div>
-          <h2>16. Duration and Termination of Contract</h2>
-          <ol>
-            <li>Defines how long the contract lasts and how it may be terminated.</li>
-          </ol>
-        </div>
-      )
-    },
-    {
-      id: 'final-provisions',
-      title: '17 Final Provisions',
-      content: (
-        <div>
-          <h2>17. Final Provisions</h2>
-          <ol>
-            <li>Miscellaneous legal clauses to finalize the agreement.</li>
-          </ol>
-        </div>
-      )
-    },
-    {
-      id: 'definitions',
-      title: '18 Definitions, Expressions, and Abbreviations',
-      content: (
-        <div>
-          <h2>18. Definitions, Expressions, and Abbreviations</h2>
-          <ol>
-            <li>Clarifies terms, expressions, and abbreviations used throughout the agreement.</li>
-          </ol>
-        </div>
-      )
-    }
+    //       </ol>
+    //     </div>
+    //   )
+    // },
+    // {
+    //   id: 'violation-terms',
+    //   title: '10 Violation of Terms',
+    //   content: (
+    //     <div>
+    //       <h2>10. Violation of Terms</h2>
+    //       <ol>
+    //         <li>Consequences and actions taken when terms of service are violated.</li>
+    //       </ol>
+    //     </div>
+    //   )
+    // },
+    // {
+    //   id: 'communication',
+    //   title: '11 Communication',
+    //   content: (
+    //     <div>
+    //       <h2>11. Communication</h2>
+    //       <ol>
+    //         <li>How communication between parties is handled, including accepted methods and timelines.</li>
+    //       </ol>
+    //     </div>
+    //   )
+    // },
+    // {
+    //   id: 'withdraw-contract',
+    //   title: '11 Right to Withdraw from a Contract',
+    //   content: (
+    //     <div>
+    //       <h2>11. Right to Withdraw from a Contract</h2>
+    //       <ol>
+    //         <li>Explains the client's rights and procedures for withdrawing from a contract.</li>
+    //       </ol>
+    //     </div>
+    //   )
+    // },
+    // {
+    //   id: 'defective-services',
+    //   title: '12 Defective Services',
+    //   content: (
+    //     <div>
+    //       <h2>12. Defective Services</h2>
+    //       <ol>
+    //         <li>Outlines procedures for handling service deficiencies or problems.</li>
+    //       </ol>
+    //     </div>
+    //   )
+    // },
+    // {
+    //   id: 'changes-gtc',
+    //   title: '13 Changes to the General Terms & Conditions (GTC)',
+    //   content: (
+    //     <div>
+    //       <h2>13. Changes to the General Terms & Conditions (GTC)</h2>
+    //       <ol>
+    //         <li>Details how changes to the terms and conditions will be communicated and enforced.</li>
+    //       </ol>
+    //     </div>
+    //   )
+    // },
+    // {
+    //   id: 'dispute-settlement',
+    //   title: '14 Out-of-Court Consumer Dispute Settlement',
+    //   content: (
+    //     <div>
+    //       <h2>14. Out-of-Court Consumer Dispute Settlement</h2>
+    //       <ol>
+    //         <li>Information about resolving disputes without litigation.</li>
+    //       </ol>
+    //     </div>
+    //   )
+    // },
+    // {
+    //   id: 'law-jurisdiction',
+    //   title: '15 Choice of Law and Jurisdiction',
+    //   content: (
+    //     <div>
+    //       <h2>15. Choice of Law and Jurisdiction</h2>
+    //       <ol>
+    //         <li>Specifies which laws apply and which courts have jurisdiction over disputes.</li>
+    //       </ol>
+    //     </div>
+    //   )
+    // },
+    // {
+    //   id: 'contract-duration',
+    //   title: '16 Duration and Termination of Contract',
+    //   content: (
+    //     <div>
+    //       <h2>16. Duration and Termination of Contract</h2>
+    //       <ol>
+    //         <li>Defines how long the contract lasts and how it may be terminated.</li>
+    //       </ol>
+    //     </div>
+    //   )
+    // },
+    // {
+    //   id: 'final-provisions',
+    //   title: '17 Final Provisions',
+    //   content: (
+    //     <div>
+    //       <h2>17. Final Provisions</h2>
+    //       <ol>
+    //         <li>Miscellaneous legal clauses to finalize the agreement.</li>
+    //       </ol>
+    //     </div>
+    //   )
+    // },
+    // {
+    //   id: 'definitions',
+    //   title: '18 Definitions, Expressions, and Abbreviations',
+    //   content: (
+    //     <div>
+    //       <h2>18. Definitions, Expressions, and Abbreviations</h2>
+    //       <ol>
+    //         <li>Clarifies terms, expressions, and abbreviations used throughout the agreement.</li>
+    //       </ol>
+    //     </div>
+    //   )
+    // }
   ];
 
   const activeTabData = tabs.find(tab => tab.id === activeTab);
@@ -499,7 +499,7 @@ const TermsAndConditions = () => {
   return (
     <div className="terms-container">
       <div className="header">
-        <Link to="/waitlist" className="back-link">← Back to waitlist</Link>
+        <Link to="/" className="back-link">← Back to waitlist</Link>
         <h1>Terms and Conditions for Use in a Simulated Platform</h1>
       </div>
 

@@ -3,10 +3,10 @@ import Select from 'react-select';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { allCountries } from 'country-telephone-data';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import './../assets/scss/waitlist4.scss';
 
-const apiUrl = 'https://myapi.myarcfunding.com/api/v1/';
+const apiUrl = 'https://myapi.myarcfunding.com/api/v1/';//'http://localhost:5500/api/v1/'
 
 const customStyles = {
   control: (base) => ({
@@ -82,6 +82,7 @@ function pad(n) {
 }
 
 function Home4() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -174,7 +175,7 @@ function Home4() {
     const newErrors = {};
     if (!formData.name) newErrors.name = 'First Name is required';
     if (!formData.email) newErrors.email = 'Email is required';
-    if (!formData.experience) newErrors.experience = 'Experience is required';
+    // if (!formData.experience) newErrors.experience = 'Experience is required';
     if (!formData.country) newErrors.country = 'Country is required';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -205,6 +206,7 @@ function Home4() {
     try {
       const response = await axios.post(`${apiUrl}users/waitlist`, payload);
       if (response.data.success) {
+        navigate('/success');
         toast.success("Successfully joined the waitlist!");
         setFormData({
           name: '',
@@ -239,7 +241,11 @@ function Home4() {
       <div className="container">
         {/* Hero Section */}
         <section className="hero">
+          
           <div className="hero-left">
+             <div class="logo-badge">
+    <img src="images/logo.png" alt="Logo" />
+  </div>
             <div className="kicker">
               <span>Early Access • Waitlist</span>
             </div>
@@ -257,11 +263,11 @@ function Home4() {
             <div className="features">
               <div className="feature">
                 <h4>Instant Funding Options</h4>
-                <p>No long evaluation phases — start trading and earning immediately.</p>
+                <p>No long evaluation phases start trading and earning immediately.</p>
               </div>
               <div className="feature">
                 <h4>High Payouts</h4>
-                <p>Keep up to 90% of your profits — trade your style, keep your edge.</p>
+                <p>Keep up to 90% of your profits trade your style, keep your edge.</p>
               </div>
               <div className="feature">
                 <h4>Scale Up to $300K</h4>
@@ -321,7 +327,7 @@ function Home4() {
                 </div>
 
                 <div className="grid-2">
-                  <div>
+                  {/* <div>
                     <label>Trading Experience</label>
                     <Select
                       name="experience"
@@ -334,7 +340,7 @@ function Home4() {
                       classNamePrefix="react-select"
                     />
                     {errors.experience && <div className="error">{errors.experience}</div>}
-                  </div>
+                  </div> */}
                   <div>
                     <label>Country</label>
                     <Select
@@ -364,7 +370,7 @@ function Home4() {
 
                 <p>
                   By joining you agree to receive email updates. We never 
-                  share your data. — <Link to="/privacy-policy" style={{  textDecoration: 'none' }}>Privacy</Link>
+                  share your data. — <Link to="/privacy-policy" style={{  textDecoration: 'none' }}>Privacy ,</Link><Link to="/terms-and-condition" style={{  textDecoration: 'none' }}> T&C</Link>
                 </p>
               </form>
             ) : (
@@ -409,7 +415,7 @@ function Home4() {
           <div className="how-steps">
             <h3>How It Works</h3>
             <ol>
-              <li><strong>Join the Waitlist Today</strong> — It's free and takes ~10 seconds.</li>
+              <li><strong>Join the Waitlist Today</strong> — It's free and takes 10 seconds.</li>
               <li><strong>Receive Exclusive Updates</strong> — Priority access, launch offers, account selection.</li>
               <li><strong>Get Your Account at 20% Off</strong> — Trade instantly when we go live and keep up to 90% of profits.</li>
             </ol>
@@ -424,9 +430,9 @@ function Home4() {
               When ARC Funding launches, waitlist traders will get first choice of accounts, 
               instant funding, and the only 20% discount we'll ever offer.
             </p>
-            <Link to="/terms-of-use" className="btn" type="button">
+            {/* <Link to="/terms-of-use" className="btn" type="button">
                                     Learn More
-                                </Link>
+                                </Link> */}
           </div>
         </section>
 
